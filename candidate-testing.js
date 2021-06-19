@@ -7,7 +7,7 @@ let candidateName = "";
 
 // TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
 
-let question = ""; // this is not currently used by the program, but I don't want to remove it since the program needs it
+let question = "";
 
 let correctAnswer = "";
 let candidateAnswer= "";
@@ -42,7 +42,8 @@ function askForName() {
 function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   for (let i = 0; i < questions.length; i++){
-    candidateAnswer = input.question(questions[i]);
+    question = questions[i];
+    candidateAnswer = input.question(question);
     console.log("");
 
     // collect the answer
