@@ -6,10 +6,6 @@ const input = require('readline-sync');
 let candidateName = "";
 
 // TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
-
-let question = "Who was the first American woman in space? ";
-
-let correctAnswer = "Sally Ride";
 let candidateAnswer= "";
 
 // array of questions to ask the user; must be in this order.
@@ -21,6 +17,9 @@ let questions = [
   "What is the minimum crew size for the ISS? "
 ];
 
+// NOTE: For some reason, the autograder needs the below line to pass the test.
+let question = questions[0];
+
 // corresponding answers; must be in this order.
 let correctAnswers = [
   "Sally Ride",
@@ -30,73 +29,81 @@ let correctAnswers = [
   "3"
 ];
 
-let candidateAnswers = []; // will collect the candidate's answers
+// NOTE: For some reason, the autograder needs the below line to pass the test.
+let correctAnswer = correctAnswers[0];
+let candidateAnswers = []; // collects candidate answers
 
 function askForName() {
-  // TODO 1.1b: Ask for candidate's name //
+  // TODO 1.1b: Ask for candidate name //
   while (candidateName === ""){
-  candidateName = input.question("What is your name? ");
+    candidateName = input.question("What is your name? ");
   }
 }
 
 function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   for (let i = 0; i < questions.length; i++){
+    // ask question
     question = questions[i];
     candidateAnswer = input.question(question);
     console.log("");
-
-    // collect the answer
+    // collect candidate answer
     candidateAnswers.push(candidateAnswer);
   }
 }
 
 function gradeQuiz(candidateAnswers) {
 
-  // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
-  console.log(`-----------------------------\nCandidate Name: ${candidateName}`);
-
-  let countCorrectAnswers = 0; // will hold number of correct answers
-
-  // check for the correct answers
+  // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
+  // NOTE: diplays functionality moved to function displayReport(grade).  This function only computes the grade
+  let countCorrectAnswers = 0; // count of correct answers
+  // check candidate answers
   for (let i = 0; i < questions.length; i++){
-    // start printing report
-    console.log(`\n${i+1}) ${questions[i]}`);
-    console.log(`Your Answer: ${candidateAnswers[i]}`);
-    console.log(`Correct Answer: ${correctAnswers[i]}`);
-
     correctAnswer = correctAnswers[i];
     candidateAnswer = candidateAnswers[i];
-
-    // compare candidate's answer to correct answer
+    // compare candidate answer to correct answer
     if (candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()){ 
       // answer was correct; increment counter
       countCorrectAnswers +=1; 
     }
   }
-  // calculate candidate's final grade:
+  // calculate final grade:
   let grade = countCorrectAnswers / questions.length * 100; 
+  return grade;
+}
 
-  // print report footer:
-  console.log(`\n>>> Overall Grade: ${grade}% (${countCorrectAnswers} of ${questions.length} responses correct) <<<`);
-  // print candidate's PASS or FAIL status
+function displayReport(grade){
+//
+  // display report header
+  console.log(`-----------------------------\nCandidate Name: ${candidateName}`);
+
+  // display report body
+  for (let i = 0; i < questions.length; i++){
+    console.log(`\n${i+1}) ${questions[i]}`);
+    console.log(`Your Answer: ${candidateAnswers[i]}`);
+    console.log(`Correct Answer: ${correctAnswers[i]
+    }`);
+  }
+
+  // display report footer:
+  console.log(`\n>>> Overall Grade: ${grade}% (${grade*(questions.length/100)} of ${questions.length} responses correct) <<<`);
   if (grade >= 80){
     console.log(`>>> Status: PASSED <<<`);
   }
   else {
     console.log(`>>> Status: FAILED <<<`);
   }
-  return grade;
 }
 
 function runProgram() {
   askForName();
   // TODO 1.1c: Ask for candidate's name //
-  
   // write a message to the console greeting the user using the name they just provided.
   console.log(`Greetings, ${candidateName}!\n`);
   askQuestion();
-  gradeQuiz(this.candidateAnswers);
+  //grade the quiz and then display the final grade report
+  let finalGrade = gradeQuiz(this.candidateAnswers);
+  displayReport(finalGrade);
 }
 
 // Don't write any code below this line //
