@@ -121,7 +121,7 @@ function runProgram() {
   candidateAnswers = askQuestion(questions);
 
   //grade the quiz and then display the final grade report
-  let grade = gradeQuiz(candidateAnswers, correctAnswers);
+  let grade = gradeQuiz(this.candidateAnswers, correctAnswers);
   displayReport(grade, candidateName);
 }
 
