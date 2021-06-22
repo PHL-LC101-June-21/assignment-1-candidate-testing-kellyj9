@@ -47,35 +47,38 @@ function askForName() {
   return candidateName;
 }
 
-function askQuestion(questions) {
+function askQuestion(quizQuestions) {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   // NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array (parameter)
   // and returns an array of collected answers
-
+  let theirAnswers = [];
+  let quizQuestion = "";
   //loop through the questions array and ask the questions
-  for (let i = 0; i < questions.length; i++){
+  for (let i = 0; i < quizQuestions.length; i++){
     // ask question
-    question = questions[i];
-    candidateAnswer = input.question(question);
+    quizQuestion = quizQuestions[i];
+    theirAnswer = input.question(quizQuestion);
     console.log("");
     // collect candidate answer
-    candidateAnswers.push(candidateAnswer);
+    theirAnswers.push(theirAnswer);
   }
-  return candidateAnswers;
+  return theirAnswers;
 }
 
-function gradeQuiz(candidateAnswers) {
+function gradeQuiz(candidateAnswers, correctAnswers) {
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
   // NOTE! diplay functionality moved to function displayReport(grade);  
   //  This function only computes and returns the grade.
 
   let candidateAnswer = "";
+  let correctAnswer = "";
   let countCorrectAnswers = 0; // count of correct answers
 
   // check candidate answers
-  for (let i = 0; i < questions.length; i++){
+  for (let i = 0; i < candidateAnswers.length; i++){
     correctAnswer = correctAnswers[i];
     candidateAnswer = candidateAnswers[i];
+    console.log(candidateAnswer);
     // compare candidate answer to correct answer
     if (candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()){ 
       // answer was correct; increment counter
@@ -122,7 +125,7 @@ function runProgram() {
   candidateAnswers = askQuestion(questions);
 
   //grade the quiz and then display the final grade report
-  let finalGrade = gradeQuiz(this.candidateAnswers);
+  let finalGrade = gradeQuiz(this.candidateAnswers, this.correctAnswers);
   displayReport(finalGrade, candidateName);
 }
 
