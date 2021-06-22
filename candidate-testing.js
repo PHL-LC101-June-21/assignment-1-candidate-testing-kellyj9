@@ -51,6 +51,8 @@ function askQuestion(questions) {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   // NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array (parameter)
   // and returns an array of collected answers
+
+  //loop through the questions array and ask the questions
   for (let i = 0; i < questions.length; i++){
     // ask question
     question = questions[i];
@@ -88,7 +90,7 @@ function gradeQuiz(candidateAnswers, correctAnswers) {
 function displayReport(grade, candidateName){
 // This function displays the user inputs and the results of the quiz.  Return value will be undefined.
   // display report header
-  console.log(`-----------------------------\nCandidate Name: ${candidateName}`);
+  console.log(`\n-----------------------------\nCandidate Name: ${candidateName}`);
 
   // display report body
   for (let i = 0; i < questions.length; i++){
@@ -109,7 +111,6 @@ function displayReport(grade, candidateName){
 }
 
 function runProgram() {
-
   // TODO 1.1c: Ask for candidate's name //
   candidateName = askForName();
 
@@ -121,7 +122,7 @@ function runProgram() {
   candidateAnswers = askQuestion(questions);
 
   //grade the quiz and then display the final grade report
-  let grade = gradeQuiz(this.candidateAnswers, this.correctAnswers);
+  grade = gradeQuiz(this.candidateAnswers, correctAnswers);
   displayReport(grade, candidateName);
 }
 
