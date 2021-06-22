@@ -64,7 +64,7 @@ function askQuestion(questions) {
   return candidateAnswers;
 }
 
-function gradeQuiz(candidateAnswers, correctAnswers) {
+function gradeQuiz(candidateAnswers) {
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
   // NOTE! diplay functionality moved to function displayReport(grade);  
   //  This function only computes and returns the grade.
@@ -122,8 +122,8 @@ function runProgram() {
   candidateAnswers = askQuestion(questions);
 
   //grade the quiz and then display the final grade report
-  grade = gradeQuiz(this.candidateAnswers, correctAnswers);
-  displayReport(grade, candidateName);
+  let finalGrade = gradeQuiz(this.candidateAnswers);
+  displayReport(finalGrade, candidateName);
 }
 
 // Don't write any code below this line //
