@@ -36,49 +36,45 @@ let candidateAnswers = []; // collects candidate answers
 
 function askForName() {
   // TODO 1.1b: Ask for candidate name //
-  //this function returns the candidate's name
-  let candidateName = "";
+  //this function returns the candidate's name.  
+  // Will return Undefined
+
   while (candidateName === ""){
     candidateName = input.question("What is your name? ");
     if (candidateName === ""){
       console.log("\nYour name is required for this quiz.");
     }
   }
-  return candidateName;
 }
 
-function askQuestion(quizQuestions) {
+function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   // NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array (parameter)
   // and returns an array of collected answers
-  let theirAnswers = [];
-  let quizQuestion = "";
+
   //loop through the questions array and ask the questions
-  for (let i = 0; i < quizQuestions.length; i++){
+  for (let i = 0; i < questions.length; i++){
     // ask question
-    quizQuestion = quizQuestions[i];
-    theirAnswer = input.question(quizQuestion);
+    question = questions[i];
+    candidateAnswer = input.question(question);
     console.log("");
     // collect candidate answer
-    theirAnswers.push(theirAnswer);
+    candidateAnswers.push(candidateAnswer);
   }
-  return theirAnswers;
 }
 
-function gradeQuiz(candidateAnswers, correctAnswers) {
+function gradeQuiz(candidateAnswers) {
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
   // NOTE! diplay functionality moved to function displayReport(grade);  
   //  This function only computes and returns the grade.
 
-  let candidateAnswer = "";
-  let correctAnswer = "";
   let countCorrectAnswers = 0; // count of correct answers
 
   // check candidate answers
-  for (let i = 0; i < candidateAnswers.length; i++){
+  for (let i = 0; i < questions.length; i++){
     correctAnswer = correctAnswers[i];
     candidateAnswer = candidateAnswers[i];
-    console.log(candidateAnswer);
+    //console.log(candidateAnswer);
     // compare candidate answer to correct answer
     if (candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()){ 
       // answer was correct; increment counter
@@ -90,7 +86,7 @@ function gradeQuiz(candidateAnswers, correctAnswers) {
   return grade;
 }
 
-function displayReport(grade, candidateName){
+function displayReport(grade, candidateName, questions, candidateAnswers, correctAnswers){
 // This function displays the user inputs and the results of the quiz.  Return value will be undefined.
   // display report header
   console.log(`\n-----------------------------\nCandidate Name: ${candidateName}`);
@@ -115,18 +111,20 @@ function displayReport(grade, candidateName){
 
 function runProgram() {
   // TODO 1.1c: Ask for candidate's name //
-  candidateName = askForName();
+  askForName();
 
   // write a message to the console greeting the user using the name they just provided.
 
   console.log(`Greetings, ${candidateName}!\n`);
 
   // ask ALL of the questions in the array
-  candidateAnswers = askQuestion(questions);
+  askQuestion(questions);
 
   //grade the quiz and then display the final grade report
-  let finalGrade = gradeQuiz(this.candidateAnswers, this.correctAnswers);
-  displayReport(finalGrade, candidateName);
+  let finalGrade = gradeQuiz(this.candidateAnswers);
+
+  // display the grade report
+  displayReport(finalGrade, candidateName, questions,candidateAnswers, correctAnswers);
 }
 
 // Don't write any code below this line //
