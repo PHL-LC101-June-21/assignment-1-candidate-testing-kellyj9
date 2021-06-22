@@ -31,17 +31,26 @@ let correctAnswers = [
 
 // NOTE: For some reason, the autograder needs the below line to pass the test.
 let correctAnswer = correctAnswers[0];
+
 let candidateAnswers = []; // collects candidate answers
 
 function askForName() {
   // TODO 1.1b: Ask for candidate name //
+  //this function returns the candidate's name
+  let candidateName = "";
   while (candidateName === ""){
     candidateName = input.question("What is your name? ");
+    if (candidateName === ""){
+      console.log("\nYour name is required for this quiz.");
+    }
   }
+  return candidateName;
 }
 
-function askQuestion() {
+function askQuestion(questions) {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
+  // NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array (parameter)
+  // and returns an array of collected answers
   for (let i = 0; i < questions.length; i++){
     // ask question
     question = questions[i];
@@ -50,13 +59,17 @@ function askQuestion() {
     // collect candidate answer
     candidateAnswers.push(candidateAnswer);
   }
+  return candidateAnswers;
 }
 
-function gradeQuiz(candidateAnswers) {
-
+function gradeQuiz(candidateAnswers, correctAnswers) {
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
-  // NOTE: diplays functionality moved to function displayReport(grade).  This function only computes the grade
+  // NOTE! diplay functionality moved to function displayReport(grade);  
+  //  This function only computes and returns the grade.
+
+  let candidateAnswer = "";
   let countCorrectAnswers = 0; // count of correct answers
+
   // check candidate answers
   for (let i = 0; i < questions.length; i++){
     correctAnswer = correctAnswers[i];
@@ -72,8 +85,8 @@ function gradeQuiz(candidateAnswers) {
   return grade;
 }
 
-function displayReport(grade){
-//
+function displayReport(grade, candidateName){
+// This function displays the user inputs and the results of the quiz.  Return value will be undefined.
   // display report header
   console.log(`-----------------------------\nCandidate Name: ${candidateName}`);
 
@@ -96,14 +109,20 @@ function displayReport(grade){
 }
 
 function runProgram() {
-  askForName();
+
   // TODO 1.1c: Ask for candidate's name //
+  candidateName = askForName();
+
   // write a message to the console greeting the user using the name they just provided.
+
   console.log(`Greetings, ${candidateName}!\n`);
-  askQuestion();
+
+  // ask ALL of the questions in the array
+  candidateAnswers = askQuestion(questions);
+
   //grade the quiz and then display the final grade report
-  let finalGrade = gradeQuiz(this.candidateAnswers);
-  displayReport(finalGrade);
+  let theirGrade = gradeQuiz(candidateAnswers, correctAnswers);
+  displayReport(theirGrade, candidateName);
 }
 
 // Don't write any code below this line //
