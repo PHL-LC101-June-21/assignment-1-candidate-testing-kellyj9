@@ -86,22 +86,22 @@ function gradeQuiz(candidateAnswers) {
   return grade;
 }
 
-function displayReport(grade, candidateName, questions, candidateAnswers, correctAnswers){
+function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidateAnswers, quizCorrectAnswers){
 // This function displays the user inputs and the results of the quiz.  Return value will be undefined.
   // display report header
-  console.log(`\n-----------------------------\nCandidate Name: ${candidateName}`);
+  console.log(`\n-----------------------------\nCandidate Name: ${quizCandidateName}`);
 
   // display report body
-  for (let i = 0; i < questions.length; i++){
-    console.log(`\n${i+1}) ${questions[i]}`);
-    console.log(`Your Answer: ${candidateAnswers[i]}`);
-    console.log(`Correct Answer: ${correctAnswers[i]
+  for (let i = 0; i < quizQuestions.length; i++){
+    console.log(`\n${i+1}) ${quizQuestions[i]}`);
+    console.log(`Your Answer: ${quizCandidateAnswers[i]}`);
+    console.log(`Correct Answer: ${quizCorrectAnswers[i]
     }`);
   }
 
   // display report footer:
-  console.log(`\n>>> Overall Grade: ${grade}% (${grade*(questions.length/100)} of ${questions.length} responses correct) <<<`);
-  if (grade >= 80){
+  console.log(`\n>>> Overall Grade: ${quizGrade}% (${quizGrade*(quizQuestions.length/100)} of ${quizQuestions.length} responses correct) <<<`);
+  if (quizGrade >= 80){
     console.log(`>>> Status: PASSED <<<`);
   }
   else {
