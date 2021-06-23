@@ -1,3 +1,9 @@
+/* This program prompts the user to answer pre-determined quiz questions, compares the candidate's answers to a list of correct answers, computes a grade for the quiz, and displays a quiz report for the user.*/
+
+// NOTE: This program asks the full list of questions within function askQuestion().
+// NOTE: Added one additional function called function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidateAnswers, quizCorrectAnswers).  The function displays the candidate's name, quiz questions/ cadidate answers/ correct answers and the results of the quiz based on the function parameters. //
+// LAST NOTE: I thought some of the functions in the starter code could use more parameters, but I wasn't sure if the autograding tests would pass by modifying the function parameters, so I left them as is.
+
 const input = require('readline-sync');
 
 // TODO 2: modify your quiz app to ask 5 questions //
@@ -6,7 +12,7 @@ const input = require('readline-sync');
 let candidateName = "";
 
 // TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
-let candidateAnswer= "";
+let candidateAnswer = "";
 
 // array of questions to ask the user; must be in this order.
 let questions = [
@@ -36,9 +42,6 @@ let candidateAnswers = []; // collects candidate answers
 
 function askForName() {
   // TODO 1.1b: Ask for candidate name //
-  //this function returns the candidate's name.  
-  // Will return Undefined
-
   while (candidateName === ""){
     candidateName = input.question("What is your name? ");
     if (candidateName === ""){
@@ -47,12 +50,10 @@ function askForName() {
   }
 }
 
+// NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array:
 function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
-  // NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array (parameter)
-  // and returns an array of collected answers
-
-  //loop through the questions array and ask the questions
+  // loop through the array and ask each question
   for (let i = 0; i < questions.length; i++){
     // ask question
     question = questions[i];
@@ -63,10 +64,10 @@ function askQuestion() {
   }
 }
 
+// NOTE! Report display functionality is in added function called displayReport.
+// This function only computes and returns the grade. 
 function gradeQuiz(candidateAnswers) {
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
-  // NOTE! diplay functionality moved to function displayReport(grade);  
-  //  This function only computes and returns the grade.
 
   let countCorrectAnswers = 0; // count of correct answers
 
@@ -74,7 +75,7 @@ function gradeQuiz(candidateAnswers) {
   for (let i = 0; i < questions.length; i++){
     correctAnswer = correctAnswers[i];
     candidateAnswer = candidateAnswers[i];
-    //console.log(candidateAnswer);
+    
     // compare candidate answer to correct answer
     if (candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()){ 
       // answer was correct; increment counter
@@ -86,8 +87,15 @@ function gradeQuiz(candidateAnswers) {
   return grade;
 }
 
-function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidateAnswers, quizCorrectAnswers){
-// This function displays the user inputs and the results of the quiz.  Return value will be undefined.
+// KELLY: THE BELOW FUNCTION displayReport WAS ADDED.  
+// FUNCTION PURPOSE: The function displays the user inputs, quiz questions/answers and grade based on the parameters given.
+// FUNCTION PARAMETERS: 
+// quizGrade is a number reflecting a quiz score; // quizCandidateName is a string reflecting the candidate's name; 
+// quizQuestions is a one-dimensional array of strings relecting the quiz questions
+// quizCandidateAnswers is a one-dimensional array of strings reflecting the candidates answers; 
+// quizCorrectAnswers is a one-dimensional array of strings reflecting the correct answers to the quiz.
+// The function return value will be Undefined.
+function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidateAnswers, quizCorrectAnswers) {
   // display report header
   console.log(`\n-----------------------------\nCandidate Name: ${quizCandidateName}`);
 
@@ -95,8 +103,7 @@ function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidat
   for (let i = 0; i < quizQuestions.length; i++){
     console.log(`\n${i+1}) ${quizQuestions[i]}`);
     console.log(`Your Answer: ${quizCandidateAnswers[i]}`);
-    console.log(`Correct Answer: ${quizCorrectAnswers[i]
-    }`);
+    console.log(`Correct Answer: ${quizCorrectAnswers[i]}`);
   }
 
   // display report footer:
@@ -114,17 +121,16 @@ function runProgram() {
   askForName();
 
   // write a message to the console greeting the user using the name they just provided.
-
   console.log(`Greetings, ${candidateName}!\n`);
 
   // ask ALL of the questions in the array
-  askQuestion(questions);
+  askQuestion();
 
   //grade the quiz and then display the final grade report
   let finalGrade = gradeQuiz(this.candidateAnswers);
 
   // display the grade report
-  displayReport(finalGrade, candidateName, questions,candidateAnswers, correctAnswers);
+  displayReport(finalGrade, candidateName, questions, candidateAnswers, correctAnswers);
 }
 
 // Don't write any code below this line //
