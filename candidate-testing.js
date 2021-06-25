@@ -1,7 +1,7 @@
 /* This program prompts the user to answer pre-determined quiz questions, compares the candidate's answers to a list of correct answers, computes a grade for the quiz, and displays a quiz report for the user.*/
 
 // NOTE: This program asks the full list of questions within function askQuestion().
-// NOTE: Added one additional function called function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidateAnswers, quizCorrectAnswers).  The function displays the candidate's name, quiz questions/ cadidate answers/ correct answers and the results of the quiz based on the function parameters. //
+// NOTE: Added one additional function called function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidateAnswers, quizCorrectAnswers).  The function displays the candidate's name, quiz questions/ candidate answers/ correct answers and the results of the quiz based on the function parameters.
 // LAST NOTE: I thought some of the functions in the starter code could use more parameters, but I wasn't sure if the autograding tests would pass by modifying the function parameters, so I left them as is.
 
 const input = require('readline-sync');
@@ -23,7 +23,7 @@ let questions = [
   "What is the minimum crew size for the ISS? "
 ];
 
-// NOTE: For some reason, the autograder needs the below line to pass the test.
+// NOTE: For some reason, the autograder needs the assignment in the below line to pass the test
 let question = questions[0];
 
 // corresponding answers; must be in this order.
@@ -35,7 +35,7 @@ let correctAnswers = [
   "3"
 ];
 
-// NOTE: For some reason, the autograder needs the below line to pass the test.
+// NOTE: For some reason, the autograder needs the assignment in the below line to pass the test.
 let correctAnswer = correctAnswers[0];
 
 let candidateAnswers = []; // collects candidate answers
@@ -43,7 +43,7 @@ let candidateAnswers = []; // collects candidate answers
 function askForName() {
   // TODO 1.1b: Ask for candidate name //
   while (candidateName === ""){
-    candidateName = input.question("What is your name? ");
+    candidateName = input.question("What is your name? ").trim();
     if (candidateName === ""){
       console.log("\nYour name is required for this quiz.");
     }
@@ -53,18 +53,18 @@ function askForName() {
 // NOTE: THIS FUNCTION ASKS ALL OF THE QUESTIONS in the questions array:
 function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
-  // loop through the array and ask each question
+  // ask each question
   for (let i = 0; i < questions.length; i++){
-    // ask question
+    // ask question and get answer
     question = questions[i];
-    candidateAnswer = input.question(question);
-    console.log("");
+    candidateAnswer = input.question("\n" + question + "\n").trim();
+    // NOTE: We'll allow user to skip past the question by pressing enter key
     // collect candidate answer
     candidateAnswers.push(candidateAnswer);
   }
 }
 
-// NOTE! Report display functionality is in added function called displayReport.
+// NOTE: Report display functionality is in added function called displayReport.
 // This function only computes and returns the grade. 
 function gradeQuiz(candidateAnswers) {
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly //
@@ -77,12 +77,12 @@ function gradeQuiz(candidateAnswers) {
     candidateAnswer = candidateAnswers[i];
     
     // compare candidate answer to correct answer
-    if (candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()){ 
+    if (candidateAnswer.toLowerCase() === correctAnswer.toLowerCase()){ 
       // answer was correct; increment counter
       countCorrectAnswers +=1; 
     }
   }
-  // calculate final grade:
+  // calculate final grade
   let grade = countCorrectAnswers / questions.length * 100; 
   return grade;
 }
@@ -90,7 +90,8 @@ function gradeQuiz(candidateAnswers) {
 // KELLY: THE BELOW FUNCTION displayReport WAS ADDED.  
 // FUNCTION PURPOSE: The function displays the user inputs, quiz questions/answers and grade based on the parameters given.
 // FUNCTION PARAMETERS: 
-// quizGrade is a number reflecting a quiz score; // quizCandidateName is a string reflecting the candidate's name; 
+// quizGrade is a number reflecting a quiz score; // 
+// quizCandidateName is a string reflecting the candidate's name; 
 // quizQuestions is a one-dimensional array of strings relecting the quiz questions
 // quizCandidateAnswers is a one-dimensional array of strings reflecting the candidates answers; 
 // quizCorrectAnswers is a one-dimensional array of strings reflecting the correct answers to the quiz.
@@ -106,7 +107,7 @@ function displayReport(quizGrade, quizCandidateName, quizQuestions, quizCandidat
     console.log(`Correct Answer: ${quizCorrectAnswers[i]}`);
   }
 
-  // display report footer:
+  // display report footer
   console.log(`\n>>> Overall Grade: ${quizGrade}% (${quizGrade*(quizQuestions.length/100)} of ${quizQuestions.length} responses correct) <<<`);
   if (quizGrade >= 80){
     console.log(`>>> Status: PASSED <<<`);
@@ -121,12 +122,12 @@ function runProgram() {
   askForName();
 
   // write a message to the console greeting the user using the name they just provided.
-  console.log(`Greetings, ${candidateName}!\n`);
+  console.log(`\nGreetings, ${candidateName}!`);
 
   // ask ALL of the questions in the array
   askQuestion();
 
-  //grade the quiz and then display the final grade report
+  // grade the quiz and then display the final grade report
   let finalGrade = gradeQuiz(this.candidateAnswers);
 
   // display the grade report
